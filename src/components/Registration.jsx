@@ -1,3 +1,5 @@
+import axios from "axios";
+import { toast } from "react-hot-toast";
 const Registration = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -6,9 +8,29 @@ const Registration = () => {
     const pin = form.pin.value;
     const mobile = form.mobile.value;
     const email = form.email.value;
+
+    if (!/^\d+$/.test(pin)) {
+      // toast.error("PIN must be a number");
+      alert("PIN must be a number");
+      return;
+    }
+
+    if (pin.length !== 5) {
+      // toast.error("PIN must be exactly 5 digits");
+      alert("PIN must be exactly 5 digits");
+      return;
+    }
+
     const user = { name, pin, mobile, email };
-    console.log(user);
-    form.reset();
+
+    axios.post("http://localhost:5000/users", user).then((response) => {
+      console.log(response.data);
+      if (response.data.insertedId) {
+        toast.success("User Created Successfully");
+        alert("User Created Successfully");
+        form.reset();
+      }
+    });
   };
   return (
     <div className='hero bg-base-200 min-h-screen'>
@@ -62,7 +84,9 @@ const Registration = () => {
             />
           </div>
           <div className='form-control mt-6'>
-            <button className='btn btn-primary'>Register</button>
+            <button className='btn btn-primary font-medium text-white text-xl tracking-widest'>
+              Register
+            </button>
           </div>
         </form>
       </div>
