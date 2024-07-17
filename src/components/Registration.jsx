@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 const Registration = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -89,6 +90,15 @@ const Registration = () => {
             </button>
           </div>
         </form>
+        <p className='text-center py-4'>
+          Existing user ?{" "}
+          <Link to='/sigin'>
+            {" "}
+            <span className='underline text-blue-600 cursor-pointer'>
+              Sign in{" "}
+            </span>
+          </Link>
+        </p>
       </div>
     </div>
   );
