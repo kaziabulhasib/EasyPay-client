@@ -1,7 +1,8 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Registration = () => {
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -24,11 +25,12 @@ const Registration = () => {
 
     const user = { name, pin, mobile, email };
 
-    axios.post("http://localhost:5000/users", user).then((response) => {
+    axios.post("http://localhost:5000/register", user).then((response) => {
       console.log(response.data);
       if (response.data.insertedId) {
         toast.success("User Created Successfully");
         alert("User Created Successfully");
+        navigate("/signin");
         form.reset();
       }
     });
@@ -92,7 +94,7 @@ const Registration = () => {
         </form>
         <p className='text-center py-4'>
           Existing user ?{" "}
-          <Link to='/sigin'>
+          <Link to='/signin'>
             {" "}
             <span className='underline text-blue-600 cursor-pointer'>
               Sign in{" "}
